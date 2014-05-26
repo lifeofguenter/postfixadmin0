@@ -87,4 +87,3 @@ if ( $CONF['configured'] === TRUE )
 </html>
 <?php
 /* vim: set expandtab softtabstop=4 tabstop=4 shiftwidth=4: */
-?>

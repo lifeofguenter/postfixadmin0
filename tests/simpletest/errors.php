@@ -247,4 +247,3 @@ function SimpleTestErrorHandler($severity, $message, $filename, $line, $super_gl
 		}
 	}
 }
-?>

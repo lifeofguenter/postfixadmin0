@@ -191,4 +191,3 @@
             $this->assertEqual('AnyDescendentInterface', array_shift($interfaces));
         }
     }
-?>

@@ -433,4 +433,3 @@
             return Simpletest::getDefaultProxyPassword();
         }
     }
-?>

@@ -12,4 +12,3 @@
         return ($result ? 0 : 1);
     }
     $test->run(new SelectiveReporter(new HtmlReporter(), @$_GET['c'], @$_GET['t']));
-?>

@@ -255,5 +255,3 @@ class SimpleTestXMLElement extends SimpleXMLElement {
 		return count($ancestors);
 	}
 }
-
-?>

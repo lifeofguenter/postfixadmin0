@@ -189,4 +189,3 @@ class SimpleExceptionTrap {
 		$this->message = false;
 	}
 }
-?>

@@ -138,4 +138,3 @@ include ("templates/menu.php");
 include ("templates/create-alias-domain.php");
 include ("templates/footer.php");
 /* vim: set expandtab softtabstop=3 tabstop=3 shiftwidth=3: */
-?>

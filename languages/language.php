@@ -38,4 +38,3 @@ $supported_languages = array(
 );
 
 /* vim: set expandtab ft=php softtabstop=4 tabstop=4 shiftwidth=4: */
-?>

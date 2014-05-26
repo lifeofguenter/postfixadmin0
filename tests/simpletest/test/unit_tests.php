@@ -14,4 +14,3 @@ if (TEST == __FILE__) {
     }
     $test->run(new SelectiveReporter(new HtmlReporter(), @$_GET['c'], @$_GET['t']));
 }
-?>

@@ -34,5 +34,3 @@
         return ($result ? 0 : 1);
     }
     $test->run(new HtmlReporter());
-    
-?>

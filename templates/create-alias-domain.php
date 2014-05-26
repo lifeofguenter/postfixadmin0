@@ -59,4 +59,4 @@ if (count($alias_domains) > 0) {
 </table>
 </form>
 </div>
-<?php /* vim: set ft=php expandtab softtabstop=3 tabstop=3 shiftwidth=3: */ ?>
+<?php /* vim: set ft=php expandtab softtabstop=3 tabstop=3 shiftwidth=3: */

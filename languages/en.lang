@@ -13,26 +13,24 @@ $PALANG['del'] = 'del';
 $PALANG['exit'] = 'Exit';
 $PALANG['cancel'] = 'Cancel';
 $PALANG['save'] = 'Save';
-$PALANG['confirm'] = 'Are you sure you want to delete this?\n';
-$PALANG['confirm_domain'] = 'Do you really want to delete all records for this domain? This can not be undone!\n';
+$PALANG['confirm'] = 'Are you sure you want to delete this?';
+$PALANG['confirm_domain'] = 'Do you really want to delete all records for this domain? This can not be undone!';
 $PALANG['check_update'] = 'Check for update';
 $PALANG['invalid_parameter'] = 'Invalid parameter!';
 
 $PALANG['pFooter_logged_as'] = 'Logged in as %s';
 
-$PALANG['pLogin_welcome'] = 'Mail admins login here to administer your domain.';
-$PALANG['pLogin_username'] = 'Login (email)';
+$PALANG['pLogin_welcome'] = 'Please sign in';
+$PALANG['pLogin_username'] = 'Email address';
 $PALANG['pLogin_password'] = 'Password';
-$PALANG['pLogin_button'] = 'Login';
+$PALANG['pLogin_button'] = 'Sign in';
 $PALANG['pLogin_failed'] = 'Your email address or password are not correct.';
-$PALANG['pLogin_login_users'] = 'Users click here to login to the user section.';
 
 $PALANG['pMenu_main'] = 'Main';
 $PALANG['pMenu_overview'] = 'Overview';
 $PALANG['pMenu_create_alias'] = 'Add Alias';
 $PALANG['pMenu_create_alias_domain'] = 'Add Alias Domain';
 $PALANG['pMenu_create_mailbox'] = 'Add Mailbox';
-$PALANG['pMenu_fetchmail'] = 'Fetch Email';
 $PALANG['pMenu_sendmail'] = 'Send Email';
 $PALANG['pMenu_password'] = 'Password';
 $PALANG['pMenu_viewlog'] = 'View Log';
@@ -54,8 +52,8 @@ $PALANG['pOverview_up_arrow'] = 'Go Top';
 $PALANG['pOverview_right_arrow'] = 'Next Page';
 $PALANG['pOverview_left_arrow'] = 'Previous Page';
 $PALANG['pOverview_alias_domain_title'] = ':: Domain Aliases';
-$PALANG['pOverview_alias_title'] = ':: Aliases';
-$PALANG['pOverview_mailbox_title'] = ':: Mailboxes';
+$PALANG['pOverview_alias_title'] = 'Aliases';
+$PALANG['pOverview_mailbox_title'] = 'Mailboxes';
 $PALANG['pOverview_button'] = 'Go';
 $PALANG['pOverview_welcome'] = 'Overview for ';
 $PALANG['pOverview_alias_domain_aliases'] = 'Alias Domains';
@@ -172,14 +170,14 @@ $PALANG['pEdit_mailbox_result_error'] = '<span class="error_msg">Unable to modif
 
 $PALANG['pPassword_welcome'] = 'Change your login password.';
 $PALANG['pPassword_admin'] = 'Login';
-$PALANG['pPassword_admin_text_error'] = '<span class="error_msg">The LOGIN that you supplied doesn\'t match a mailbox!</span>';
+$PALANG['pPassword_admin_text_error'] = 'The LOGIN that you supplied doesn\'t match a mailbox!';
 $PALANG['pPassword_password_current'] = 'Current Password';
-$PALANG['pPassword_password_current_text_error'] = '<span class="error_msg">You didn\'t supply your current password!</span>';
+$PALANG['pPassword_password_current_text_error'] = 'You didn\'t supply your current password!';
 $PALANG['pPassword_password'] = 'New Password';
 $PALANG['pPassword_password2'] = 'New Password (again)';
-$PALANG['pPassword_password_text_error'] = '<span class="error_msg">The passwords that you supplied don\'t match!<br />Or are empty!</span>';
+$PALANG['pPassword_password_text_error'] = 'The passwords that you supplied don\'t match! Or are empty!';
 $PALANG['pPassword_button'] = 'Change Password';
-$PALANG['pPassword_result_error'] = '<span class="error_msg">Unable to change your password!</span>';
+$PALANG['pPassword_result_error'] = 'Unable to change your password!';
 $PALANG['pPassword_result_success'] = 'Your password has been changed!';
 
 $PALANG['pEdit_vacation_set'] = 'Change / Set away message';
@@ -273,7 +271,7 @@ $PALANG['pAdminCreate_domain_aliases_text'] = '-1 = disable | 0 = unlimited';
 $PALANG['pAdminCreate_domain_mailboxes'] = 'Mailboxes';
 $PALANG['pAdminCreate_domain_mailboxes_text'] = '-1 = disable | 0 = unlimited';
 $PALANG['pAdminCreate_domain_maxquota'] = 'Max Quota';
-$PALANG['pAdminCreate_domain_maxquota_text'] = 'MB<br /> -1 = disable | 0 = unlimited';
+$PALANG['pAdminCreate_domain_maxquota_text'] = 'MB, -1 = disable | 0 = unlimited';
 $PALANG['pAdminCreate_domain_transport'] = 'Transport';
 $PALANG['pAdminCreate_domain_transport_text'] = 'Define transport';
 $PALANG['pAdminCreate_domain_defaultaliases'] = 'Add default mail aliases';
@@ -392,48 +390,4 @@ $PALANG['pInvalidDomainRegex'] = "Invalid domain name %s, fails regexp check";
 $PALANG['pInvalidDomainDNS'] = "Invalid domain %s, and/or not discoverable in DNS";
 $PALANG['pInvalidMailRegex'] = "Invalid email address, fails regexp check";
 
-$PALANG['pFetchmail_welcome'] = 'Fetch mail for:';
-$PALANG['pFetchmail_new_entry'] = 'New entry';
-$PALANG['pFetchmail_database_save_error'] = 'Could not save this entry in the database!';
-$PALANG['pFetchmail_database_save_success'] = 'Entry saved in database.';
-$PALANG['pFetchmail_error_invalid_id'] = 'No entry with ID %s found!';
-$PALANG['pFetchmail_invalid_mailbox'] = 'Invalid mailbox!';
-$PALANG['pFetchmail_server_missing'] = 'Please enter the remote server name!';
-$PALANG['pFetchmail_user_missing'] = 'Please enter the remote username!';
-$PALANG['pFetchmail_password_missing'] = 'Please enter the remote password!';
-$PALANG['pFetchmail_field_id']              = 'ID';
-$PALANG['pFetchmail_field_mailbox']         = 'Mailbox';
-$PALANG['pFetchmail_field_src_server']      = 'Server';
-$PALANG['pFetchmail_field_src_auth']        = 'Auth Type';
-$PALANG['pFetchmail_field_src_user']        = 'User';
-$PALANG['pFetchmail_field_src_password']    = 'Password';
-$PALANG['pFetchmail_field_src_folder']      = 'Folder';
-$PALANG['pFetchmail_field_poll_time']       = 'Poll';
-$PALANG['pFetchmail_field_fetchall']        = 'Fetch All';
-$PALANG['pFetchmail_field_keep']            = 'Keep';
-$PALANG['pFetchmail_field_protocol']        = 'Protocol';
-$PALANG['pFetchmail_field_usessl']          = 'SSL active';
-$PALANG['pFetchmail_field_extra_options']   = 'Extra Options';
-$PALANG['pFetchmail_field_mda']             = 'MDA';
-$PALANG['pFetchmail_field_date']            = 'Date';
-$PALANG['pFetchmail_field_returned_text']   = 'Returned Text';
-$PALANG['pFetchmail_desc_id']               = 'Record ID';
-$PALANG['pFetchmail_desc_mailbox']          = 'Local mailbox';
-$PALANG['pFetchmail_desc_src_server']       = 'Remote Server';
-$PALANG['pFetchmail_desc_src_auth']         = 'Mostly \'password\''; # Translators: Please do NOT translate 'password' here
-$PALANG['pFetchmail_desc_src_user']         = 'Remote User';
-$PALANG['pFetchmail_desc_src_password']     = 'Remote Password';
-$PALANG['pFetchmail_desc_src_folder']       = 'Remote Folder';
-$PALANG['pFetchmail_desc_poll_time']        = 'Poll every ... minutes';
-$PALANG['pFetchmail_desc_fetchall']         = 'Retrieve  both old (seen) and new messages';
-$PALANG['pFetchmail_desc_keep']             = 'Keep retrieved messages on the remote mailserver';
-$PALANG['pFetchmail_desc_protocol']         = 'Protocol to use';
-$PALANG['pFetchmail_desc_usessl']           = 'SSL encryption';
-$PALANG['pFetchmail_desc_extra_options']    = 'Extra fetchmail Options';
-$PALANG['pFetchmail_desc_mda']              = 'Mail Delivery Agent';
-$PALANG['pFetchmail_desc_date']             = 'Date of last polling/configuration change';
-$PALANG['pFetchmail_desc_returned_text']    = 'Text message from last polling';
-
 $PALANG['please_keep_this_as_last_entry'] = ''; # needed for language-check.sh
-/* vim: set expandtab ft=php softtabstop=3 tabstop=3 shiftwidth=3: */
-?>

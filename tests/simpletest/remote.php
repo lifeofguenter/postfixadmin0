@@ -114,4 +114,3 @@
             return $this->_size;
         }
     }
-?>

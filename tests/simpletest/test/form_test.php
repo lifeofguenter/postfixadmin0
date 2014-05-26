@@ -325,4 +325,3 @@
             $this->assertIdentical($form->getValue(new SimpleByName('a')), 'me');
         }
     }
-?>

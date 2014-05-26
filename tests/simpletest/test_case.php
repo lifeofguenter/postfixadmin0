@@ -681,4 +681,3 @@
      *    @deprecated
      */
     class BadGroupTest extends BadTestSuite { }
-?>

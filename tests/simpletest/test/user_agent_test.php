@@ -355,4 +355,3 @@
                     new SimpleGetEncoding());
         }
     }
-?>

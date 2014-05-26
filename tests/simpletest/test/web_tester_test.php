@@ -151,4 +151,3 @@
             $this->assertNotEqual('a', 'A');
         }
     }
-?>

@@ -57,4 +57,3 @@
             return $this->assertEqual(strtolower($a), strtolower($b));
         }
     }
-?>

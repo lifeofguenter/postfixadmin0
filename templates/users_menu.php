@@ -20,4 +20,3 @@ if (file_exists (realpath ("../motd-users.txt")))
    include ("../motd-users.txt");
    print "</div>";
 }
-?>

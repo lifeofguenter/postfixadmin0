@@ -182,4 +182,3 @@ include ("templates/message.php");
 include ("templates/footer.php");
 
 /* vim: set expandtab softtabstop=4 tabstop=4 shiftwidth=4: */
-?>

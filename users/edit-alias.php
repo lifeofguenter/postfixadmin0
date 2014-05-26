@@ -119,4 +119,3 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
 }
 
 /* vim: set expandtab softtabstop=4 tabstop=4 shiftwidth=4: */
-?>

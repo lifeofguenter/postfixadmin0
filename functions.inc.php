@@ -1,22 +1,30 @@
 <?php
-/** 
- * Postfix Admin 
- * 
- * LICENSE 
- * This source file is subject to the GPL license that is bundled with  
- * this package in the file LICENSE.TXT. 
- * 
- * Further details on the project are available at : 
- *     http://www.postfixadmin.com or http://postfixadmin.sf.net 
- * 
- * @version $Id: functions.inc.php 1650 2014-02-19 12:27:02Z christian_boltz $ 
- * @license GNU GPL v2 or later. 
- * 
+/**
+ * Postfix Admin
+ *
+ * LICENSE
+ * This source file is subject to the GPL license that is bundled with
+ * this package in the file LICENSE.TXT.
+ *
+ * Further details on the project are available at :
+ *     http://www.postfixadmin.com or http://postfixadmin.sf.net
+ *
+ * @version $Id: functions.inc.php 1650 2014-02-19 12:27:02Z christian_boltz $
+ * @license GNU GPL v2 or later.
+ *
  * File: functions.inc.php
  * Contains re-usable code.
  */
 
-$version = '2.3.7';
+$version = '0.1';
+
+function html_escape($string)
+{
+    $string = str_replace('<br>', "\n", $string);
+    $string = htmlentities($string, ENT_QUOTES|ENT_HTML5, 'UTF-8');
+    $string = str_replace('\n', '<br>', $string);
+    return $string;
+}
 
 /**
  * check_session
@@ -36,7 +44,7 @@ function authentication_get_username()
 }
 
 /**
- * Returns the type of user - either 'user' or 'admin' 
+ * Returns the type of user - either 'user' or 'admin'
  * Returns false if neither (E.g. if not logged in)
  * @return String admin or user or (boolean) false.
  */
@@ -68,9 +76,9 @@ function authentication_has_role($role) {
 }
 
 /**
- * Used to enforce that $user has a particular role when 
+ * Used to enforce that $user has a particular role when
  * viewing a page.
- * If they are lacking a role, redirect them to 
+ * If they are lacking a role, redirect them to
  * $CONF['postfix_admin_url']/login.php
  *
  * Note, user < admin < global-admin
@@ -106,7 +114,7 @@ function authentication_is_user() {
 
 /**
  * Add an error message for display on the next page that is rendered.
- * @param String message to show. 
+ * @param String message to show.
  *
  * Stores string in session. Flushed through header template.
  * @see _flash_string()
@@ -179,13 +187,17 @@ function check_language ($use_post = 1)
 // Action: returns a language selector dropdown with the browser (or cookie) language preselected
 // Call: language_selector()
 //
-function language_selector()
+function language_selector($class = '')
 {
     global $supported_languages; # from languages/languages.php
 
     $current_lang = check_language();
 
-    $selector = '<select name="lang" xml:lang="en" dir="ltr">';
+    if (!empty($class))
+    {
+        $class = 'class="' . $class . '"';
+    }
+    $selector = '<select ' . $class . ' name="lang" xml:lang="en" dir="ltr">';
 
     foreach($supported_languages as $lang => $lang_name) {
         if ($lang == $current_lang) {
@@ -235,7 +247,7 @@ function check_domain ($domain)
         return false;
     }
 
-    if (isset($CONF['emailcheck_resolve_domain']) && 'YES' == $CONF['emailcheck_resolve_domain'] && 'WINDOWS'!=(strtoupper(substr(php_uname('s'), 0, 7)))) 
+    if (isset($CONF['emailcheck_resolve_domain']) && 'YES' == $CONF['emailcheck_resolve_domain'] && 'WINDOWS'!=(strtoupper(substr(php_uname('s'), 0, 7))))
     {
 
         // Look for an AAAA, A, or MX record for the domain
@@ -277,7 +289,7 @@ function check_email ($email)
     //strip the vacation domain out if we are using it
     //and change from blah#foo.com@autoreply.foo.com to blah@foo.com
     if ($CONF['vacation'] == 'YES')
-    { 
+    {
         $vacation_domain = $CONF['vacation_domain'];
         $ce_email = preg_replace("/@$vacation_domain/", '', $ce_email);
         $ce_email = preg_replace("/#/", '@', $ce_email);
@@ -309,7 +321,7 @@ function check_email ($email)
  * Clean a string, escaping any meta characters that could be
  * used to disrupt an SQL string. i.e. "'" => "\'" etc.
  *
- * @param String (or Array) 
+ * @param String (or Array)
  * @return String (or Array) of cleaned data, suitable for use within an SQL
  *    statement.
  */
@@ -321,7 +333,7 @@ function escape_string ($string)
     if(is_array($string)) {
         $clean = array();
         foreach(array_keys($string) as $row) {
-            $clean[$row] = escape_string($string[$row]);  
+            $clean[$row] = escape_string($string[$row]);
         }
         return $clean;
     }
@@ -340,14 +352,14 @@ function escape_string ($string)
         {
             $escaped_string = mysqli_real_escape_string($link, $string);
         }
-        if ($CONF['database_type'] == "pgsql") 
+        if ($CONF['database_type'] == "pgsql")
         {
             // php 5.2+ allows for $link to be specified.
             if (version_compare(phpversion(), "5.2.0", ">="))
             {
                 $escaped_string = pg_escape_string($link, $string);
             }
-            else 
+            else
             {
                 $escaped_string = pg_escape_string($string);
             }
@@ -370,7 +382,7 @@ function escape_string ($string)
  *
  *  @param String parameter name.
  *  @param String (optional) - default value if key is not set.
- *  @return String 
+ *  @return String
  */
 function safeget ($param, $default="") {
     $retval=$default;
@@ -395,7 +407,7 @@ function safepost ($param, $default="") {
 /**
  * safeserver
  * @see safeget()
- * @param String $param 
+ * @param String $param
  * @param String $default (optional)
  * @return String value from $_SERVER[$param] or $default
  */
@@ -408,7 +420,7 @@ function safeserver ($param, $default="") {
 /**
  * safecookie
  * @see safeget()
- * @param String $param 
+ * @param String $param
  * @param String $default (optional)
  * @return String value from $_COOKIE[$param] or $default
  */
@@ -458,7 +470,7 @@ function get_domain_properties ($domain)
     if ( $list['alias_count'] > $page_size )
     {
         while ( $current < $list['alias_count'] )
-        { 
+        {
             $limitSql=('pgsql'==$CONF['database_type']) ? "1 OFFSET $current" : "$current, 1";
             $query = "SELECT $table_alias.address
                 FROM $table_alias
@@ -499,7 +511,7 @@ function get_domain_properties ($domain)
     if ( $list['mailbox_count'] > $page_size )
     {
         while ( $current < $list['mailbox_count'] )
-        { 
+        {
             $limitSql=('pgsql'==$CONF['database_type']) ? "1 OFFSET $current" : "$current, 1";
             $query = "SELECT $table_mailbox.username FROM $table_mailbox WHERE $table_mailbox.domain='$domain' ORDER BY $table_mailbox.username LIMIT $limitSql";
             $result = db_query ("$query");
@@ -742,7 +754,7 @@ function check_owner ($username, $domain)
         if ($result['rows'] > 1) { # "ALL" + specific domain permissions. 2.3 doesn't create such entries, but they are available as leftover from older versions
             flash_error("Permission check returned more than one result. Please go to 'edit admin' for your username and press the save "
              . "button once to fix the database. If this doesn't help, open a bugreport.");
-        } 
+        }
         return false;
     }
     else
@@ -775,7 +787,7 @@ function check_alias_owner ($username, $alias)
 
 
 /**
- * List domains for an admin user. 
+ * List domains for an admin user.
  * @param String $username
  * @return array of domain names.
  */
@@ -787,9 +799,9 @@ function list_domains_for_admin ($username)
     // does $username need escaping here?
     $active_sql = db_get_boolean(True);
     $backupmx_sql = db_get_boolean(False);
-    $query = "SELECT $table_domain.domain, $table_domain_admins.username FROM $table_domain 
-        LEFT JOIN $table_domain_admins ON $table_domain.domain=$table_domain_admins.domain 
-        WHERE $table_domain_admins.username='$username' 
+    $query = "SELECT $table_domain.domain, $table_domain_admins.username FROM $table_domain
+        LEFT JOIN $table_domain_admins ON $table_domain.domain=$table_domain_admins.domain
+        WHERE $table_domain_admins.username='$username'
         AND $table_domain.active='$active_sql'
         AND $table_domain.backupmx='$backupmx_sql'
         ORDER BY $table_domain_admins.domain";
@@ -1137,8 +1149,8 @@ function generate_password () {
 
 
 /**
- * Encrypt a password, using the apparopriate hashing mechanism as defined in 
- * config.inc.php ($CONF['encrypt']). 
+ * Encrypt a password, using the apparopriate hashing mechanism as defined in
+ * config.inc.php ($CONF['encrypt']).
  * When wanting to compare one pw to another, it's necessary to provide the salt used - hence
  * the second parameter ($pw_db), which is the existing hash from the DB.
  *
@@ -1206,7 +1218,7 @@ function pacrypt ($pw, $pw_db="")
         if(preg_match('/^{.*}/', $pw_db)) {
             // we have a flavor in the db -> use it instead of default flavor
             $result = preg_split('/[{}]/', $pw_db, 3); # split at { and/or }
-            $flavor = $result[1];  
+            $flavor = $result[1];
             $salt = substr($result[2], 0, 2);
         }
 
@@ -1227,7 +1239,7 @@ function pacrypt ($pw, $pw_db="")
         $split_method = preg_split ('/:/', $CONF['encrypt']);
         $method       = strtoupper($split_method[1]);
         if (! preg_match("/^[A-Z0-9-]+$/", $method)) { die("invalid dovecot encryption method"); }  # TODO: check against a fixed list?
-        if (strtolower($method) == 'md5-crypt') die("\$CONF['encrypt'] = 'dovecot:md5-crypt' will not work because dovecotpw generates a random salt each time. Please use \$CONF['encrypt'] = 'md5crypt' instead."); 
+        if (strtolower($method) == 'md5-crypt') die("\$CONF['encrypt'] = 'dovecot:md5-crypt' will not work because dovecotpw generates a random salt each time. Please use \$CONF['encrypt'] = 'md5crypt' instead.");
 
         $dovecotpw = "dovecotpw";
         if (!empty($CONF['dovecotpw'])) $dovecotpw = $CONF['dovecotpw'];
@@ -1257,7 +1269,7 @@ function pacrypt ($pw, $pw_db="")
                 $stderr_output = stream_get_contents($pipes[2]);
                 error_log('dovecotpw password encryption failed.');
                 error_log('STDERR output: ' . $stderr_output);
-                die("can't encrypt password with dovecotpw, see error log for details"); 
+                die("can't encrypt password with dovecotpw, see error log for details");
             }
 
             fclose($pipes[1]);
@@ -1499,7 +1511,8 @@ function db_connect ($ignore_errors = 0)
         {
             $link = @mysqli_connect ($CONF['database_host'], $CONF['database_user'], $CONF['database_password']) or $error_text .= ("<p />DEBUG INFORMATION:<br />Connect: " .  mysqli_connect_error () . "$DEBUG_TEXT");
             if ($link) {
-                @mysqli_query($link,"SET CHARACTER SET utf8");
+                mysqli_set_charset($link, 'utf8');
+                //@mysqli_query($link,"SET CHARACTER SET utf8");
                 @mysqli_query($link,"SET COLLATION_CONNECTION='utf8_general_ci'");
                 $success = @mysqli_select_db ($link, $CONF['database_name']) or $error_text .= ("<p />DEBUG INFORMATION:<br />MySQLi Select Database: " .  mysqli_error ($link) . "$DEBUG_TEXT");
             }
@@ -1570,13 +1583,13 @@ function db_get_boolean($bool) {
         // return either true or false (unquoted strings)
         if($bool) {
             return 't';
-        }  
+        }
         return 'f';
     }
     elseif($CONF['database_type'] == 'mysql' || $CONF['database_type'] == 'mysqli') {
         if($bool) {
-            return 1;  
-        } 
+            return 1;
+        }
         return 0;
     }
 }
@@ -1599,13 +1612,13 @@ function db_query ($query, $ignore_errors = 0)
 
     if (!is_resource($link)) $link = db_connect ();
 
-    if ($CONF['database_type'] == "mysql") $result = @mysql_query ($query, $link) 
+    if ($CONF['database_type'] == "mysql") $result = @mysql_query ($query, $link)
         or $error_text = "<p />DEBUG INFORMATION:<br />Invalid query: " . mysql_error($link) . "$DEBUG_TEXT";
-    if ($CONF['database_type'] == "mysqli") $result = @mysqli_query ($link, $query) 
+    if ($CONF['database_type'] == "mysqli") $result = @mysqli_query ($link, $query)
         or $error_text = "<p />DEBUG INFORMATION:<br />Invalid query: " . mysqli_error($link) . "$DEBUG_TEXT";
     if ($CONF['database_type'] == "pgsql")
     {
-        $result = @pg_query ($link, $query) 
+        $result = @pg_query ($link, $query)
             or $error_text = "<p />DEBUG INFORMATION:<br />Invalid query: " . pg_last_error() . "$DEBUG_TEXT";
     }
     if ($error_text != "" && $ignore_errors == 0) die($error_text);
@@ -1824,8 +1837,8 @@ function db_log ($username,$domain,$action,$data)
  */
 function db_in_clause($field, $values) {
     return " $field IN ('"
-    . implode("','",escape_string(array_values($values))) 
-    . "') "; 
+    . implode("','",escape_string(array_values($values)))
+    . "') ";
 }
 
 //
@@ -2165,9 +2178,9 @@ function create_mailbox_subfolders($login,$cleartext_password)
 
 //
 // gen_show_status
-// Action: Return a string of colored &nbsp;'s that indicate 
+// Action: Return a string of colored &nbsp;'s that indicate
 //         the if an alias goto has an error or is sent to
-//         addresses list in show_custom_domains 
+//         addresses list in show_custom_domains
 // Call: gen_show_status (string alias_address)
 //
 function gen_show_status ($show_alias)
@@ -2235,13 +2248,13 @@ function gen_show_status ($show_alias)
         else
         {
             $stat_string .= $CONF['show_status_text'] . "&nbsp;";
-        } 
+        }
 
     }
     else
     {
         $stat_string .= $CONF['show_status_text'] . "&nbsp;";
-    } 
+    }
 
     // POP/IMAP CHECK
     if ( $CONF['show_popimap'] == 'YES' )
@@ -2262,7 +2275,7 @@ function gen_show_status ($show_alias)
         else
         {
             $stat_string .= $CONF['show_status_text'] . "&nbsp;";
-        } 
+        }
     }
 
     // CUSTOM DESTINATION CHECK
@@ -2278,13 +2291,13 @@ function gen_show_status ($show_alias)
             else
             {
                 $stat_string .= $CONF['show_status_text'] . "&nbsp;";
-            } 
-        } 
+            }
+        }
     }
     else
     {
         $stat_string .= ";&nbsp;";
-    } 
+    }
 
     //   $stat_string .= "<span style='background-color:green'> &nbsp; </span> &nbsp;" .
     //                  "<span style='background-color:blue'> &nbsp; </span> &nbsp;";

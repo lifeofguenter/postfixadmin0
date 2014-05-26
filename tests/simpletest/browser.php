@@ -1094,4 +1094,3 @@
             return $this->isSubmit($label) || ($this->getLink($label) !== false) || $this->isImage($label);
         }
     }
-?>

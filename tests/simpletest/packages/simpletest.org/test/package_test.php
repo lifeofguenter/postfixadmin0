@@ -85,5 +85,3 @@ class TestOfContentTransformationFromXMLToHTML extends UnitTestCase {
 
 $test = &new TestOfContentTransformationFromXMLToHTML();
 $test->run(new HtmlReporter());
-
-?>

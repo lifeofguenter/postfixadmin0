@@ -167,4 +167,3 @@ fwrite(STDOUT,$output);
 if (PEAR::isError($status)) {
 	fwrite (STDERR,$status->getMessage());
 }
-?>

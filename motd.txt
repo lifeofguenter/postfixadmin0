@@ -1,7 +1,4 @@
-<div class="standout">
-=== Announcement ===<br />
-This is a new version of Postfix Admin.<br />
-If you have any questions please direct them to the <a href="mailto:<?php print $CONF['admin_email']; ?>">Site Admin</a><br />
-=== Announcement ===<br />
-</div>
-<br />
+<h1>Hi there!</h1>
+<p>
+    Welcome to the new and shiny Postfix Admin (Zero). Hope you enjoy ;-)
+</p>

@@ -180,4 +180,3 @@ $has_alias_control = 0; # temporary variable to simplify admin vs. superadmin co
    print "</table>\n";
 }
 # vim: ts=3 expandtab ft=php
-?>

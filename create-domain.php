@@ -1,55 +1,19 @@
 <?php
-/** 
- * Postfix Admin 
- * 
- * LICENSE 
- * This source file is subject to the GPL license that is bundled with  
- * this package in the file LICENSE.TXT. 
- * 
- * Further details on the project are available at : 
- *     http://www.postfixadmin.com or http://postfixadmin.sf.net 
- * 
- * @version $Id: create-domain.php 1037 2011-04-15 23:26:58Z christian_boltz $ 
- * @license GNU GPL v2 or later. 
- * 
- * File: create-domain.php
- * Allows administrators to create new domains.
- * Template File: admin_create-domain.php
- *
- * Template Variables:
- *
- * tMessage
- * tDomain
- * tDescription
- * tAliases
- * tMailboxes
- * tMaxquota
- * tDefaultaliases
- *
- * Form POST \ GET Variables:
- *
- * fDomain
- * fDescription
- * fAliases
- * fMailboxes
- * fMaxquota
- * fDefaultaliases
- */
 
-require_once('common.php');
+require_once 'common.php';
 
 authentication_require_role('global-admin');
 
 
 $form_fields = array(
     'fDomain'         => array('type' => 'str', 'default' => null),
-    'fDescription'    => array('type' => 'str', 'default' =>''), 
-    'fAliases'        => array('type' => 'int', 'default' => $CONF['aliases']), 
-    'fMailboxes'      => array('type' => 'int', 'default' => $CONF['mailboxes']), 
-    'fMaxquota'       => array('type' => 'int', 'default' => $CONF['maxquota']), 
-    'fTransport'      => array('type' => 'str', 'default' => $CONF['transport_default'], 'options' => $CONF['transport_options']), 
-    'fDefaultaliases' => array('type' => 'str', 'default' => 'off', 'options' => array('on', 'off')), 
-    'fBackupmx'       => array('type' => 'str', 'default' => 'off', 'options' => array('on', 'off')) 
+    'fDescription'    => array('type' => 'str', 'default' =>''),
+    'fAliases'        => array('type' => 'int', 'default' => $CONF['aliases']),
+    'fMailboxes'      => array('type' => 'int', 'default' => $CONF['mailboxes']),
+    'fMaxquota'       => array('type' => 'int', 'default' => $CONF['maxquota']),
+    'fTransport'      => array('type' => 'str', 'default' => $CONF['transport_default'], 'options' => $CONF['transport_options']),
+    'fDefaultaliases' => array('type' => 'str', 'default' => 'off', 'options' => array('on', 'off')),
+    'fBackupmx'       => array('type' => 'str', 'default' => 'off', 'options' => array('on', 'off'))
 );
 
 foreach($form_fields  as $key => $default) {
@@ -145,10 +109,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
     }
 }
 
-include ("templates/header.php");
-include ("templates/menu.php");
-include ("templates/admin_create-domain.php");
-include ("templates/footer.php");
-
-/* vim: set expandtab softtabstop=4 tabstop=4 shiftwidth=4: */
-?>
+$template_title = 'Create Domain - Postfix Admin (Zero)';
+include 'templates/header.php';
+include 'templates/menu.php';
+include 'templates/admin_create-domain.php';
+include 'templates/footer.php';

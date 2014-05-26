@@ -32,4 +32,4 @@
 </table>
 </form>
 </div>
-<?php /* vim: set ft=php expandtab softtabstop=4 tabstop=4 shiftwidth=4: */ ?>
+<?php /* vim: set ft=php expandtab softtabstop=4 tabstop=4 shiftwidth=4: */

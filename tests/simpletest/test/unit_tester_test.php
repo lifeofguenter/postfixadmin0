@@ -51,4 +51,3 @@
             $this->assertClone($a, $b);
         }
     }
-?>

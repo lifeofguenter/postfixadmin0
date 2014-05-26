@@ -188,4 +188,3 @@
             $encoding->writeHeadersTo($socket);
         }
     }
-?>

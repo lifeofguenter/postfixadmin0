@@ -222,4 +222,3 @@
             $this->assertEqual($jar->selectAsPairs(new SimpleUrl('/')), array());
         }
     }
-?>

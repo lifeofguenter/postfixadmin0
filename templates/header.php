@@ -1,42 +1,40 @@
 <?php if( !defined('POSTFIXADMIN') ) die( "This file cannot be used standalone." ); ?>
 <?php
-@header ("Expires: Sun, 16 Mar 2003 05:00:00 GMT");
-@header ("Last-Modified: " . gmdate ("D, d M Y H:i:s") . " GMT");
-@header ("Cache-Control: no-store, no-cache, must-revalidate");
-@header ("Cache-Control: post-check=0, pre-check=0", false);
-@header ("Pragma: no-cache");
-@header ("Content-Type: text/html; charset=UTF-8");
+header('Content-Type: text/html; charset=UTF-8');
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<?php
-if (file_exists (realpath ("../".$CONF['theme_css']))) {
-    print "<link rel=\"stylesheet\" type=\"text/css\" href=\"../".htmlentities($CONF['theme_css'])."\" />\n";
-} else {
-    print "<link rel=\"stylesheet\" type=\"text/css\" href=\"".htmlentities($CONF['theme_css'])."\" />\n";
-}
-?>
-<title>Postfix Admin - <?php print $_SERVER['HTTP_HOST']; ?></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="shortcut icon" href="../../assets/ico/favicon.ico"> -->
+
+    <?php if (!empty($template_title)): ?>
+    <title><?php echo html_escape($template_title); ?></title>
+    <?php else: ?>
+    <title>Postfix Admin - <?php print $_SERVER['HTTP_HOST'] ?></title>
+    <?php endif; ?>
+
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <?php if (!empty($CONF['theme_css'])): ?>
+    <link href="<?php echo html_escape($CONF['theme_css']) ?>" rel="stylesheet">
+    <?php else: ?>
+    <link href="assets/css/bootstrap-theme.min.css" rel="stylesheet">
+    <?php endif; ?>
+    <link href="assets/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+    <?php if (stripos($_SERVER['SCRIPT_NAME'], '/login.php') !== false): ?>
+    <link href="assets/css/signin.css" rel="stylesheet">
+    <?php endif; ?>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-<div id="login_header">
-<?php
-if (file_exists (realpath ("../".$CONF['theme_logo'])))
-{
-    print "<img id=\"login_header_logo\" src=\"../".htmlentities($CONF['theme_logo'])."\" />\n";
-} else {
-    print "<img id=\"login_header_logo\" src=\"".htmlentities($CONF['theme_logo'])."\" />\n";
-}
-
-if (($CONF['show_header_text'] == "YES") and ($CONF['header_text']))
-{
-    print "<h2>" . $CONF['header_text'] . "</h2>\n";
-}
-?>
-</div>
 
 <?php
 if(isset($_SESSION['flash'])) {
@@ -55,8 +53,5 @@ if(isset($_SESSION['flash'])) {
         echo '</ul>';
     }
     /* nuke it from orbit. It's the only way to be sure. */
-    $_SESSION['flash'] = array(); 
+    $_SESSION['flash'] = array();
 }
-
-/* vim: set expandtab softtabstop=4 tabstop=4 shiftwidth=4: */
-?>

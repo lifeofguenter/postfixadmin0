@@ -62,5 +62,3 @@ class ArrayReporter extends SimpleReporter {
         return $this->_results;
 	}
 }
-
-?>

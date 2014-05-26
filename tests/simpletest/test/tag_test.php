@@ -552,4 +552,3 @@
             $this->assertEqual($label->getText(), 'Here are words');
         }
     }
-?>

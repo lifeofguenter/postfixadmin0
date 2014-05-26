@@ -357,4 +357,3 @@
             return $formatted;
         }
     }
-?>

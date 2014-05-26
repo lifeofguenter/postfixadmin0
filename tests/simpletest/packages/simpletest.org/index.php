@@ -43,4 +43,3 @@ foreach ($languages as $language) {
 	}
 	closedir($dir);
 }
-?>

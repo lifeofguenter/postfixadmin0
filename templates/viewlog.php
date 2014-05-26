@@ -1,59 +1,49 @@
 <?php if( !defined('POSTFIXADMIN') ) die( "This file cannot be used standalone." ); ?>
-<div id="overview">
-<form name="overview" method="post">
-<select name="fDomain" onChange="this.form.submit();">
-<?php
-for ($i = 0; $i < sizeof ($list_domains); $i++)
-{
-   if ($fDomain == $list_domains[$i])
-   {
-      print "<option value=\"$list_domains[$i]\" selected>$list_domains[$i]</option>\n";
-   }
-   else
-   {
-      print "<option value=\"$list_domains[$i]\">$list_domains[$i]</option>\n";
-   }
-}
-?>
-</select>
-<input class="button" type="submit" name="go" value="<?php print $PALANG['pViewlog_button']; ?>" />
-</form>
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-8">
+            <h2><?php echo html_escape($PALANG['pViewlog_welcome'] . ' ' . $fDomain) ?></h2>
+        </div>
+        <div class="col-md-4 margin-top-20">
+            <form name="overview" method="post" class="form-inline pull-right">
+                <select name="fDomain" class="selectpicker" onchange="this.form.submit();">
+                <?php if (!empty($list_domains) && is_array($list_domains)): ?>
+                <?php foreach($list_domains as $list_domain): ?>
+                    <option value="<?php echo html_escape($list_domain) ?>"<?php echo (($fDomain == $list_domain) ? ' selected' : '') ?>><?php echo html_escape($list_domain) ?></option>
+                <?php endforeach; ?>
+                <?php endif; ?>
+                </select>
+                <button type="submit" class="btn btn-default"><?php print $PALANG['pViewlog_button']; ?></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th><?php echo html_escape($PALANG['pViewlog_timestamp']) ?></th>
+                <th><?php echo html_escape($PALANG['pViewlog_username']) ?></th>
+                <th><?php echo html_escape($PALANG['pViewlog_domain']) ?></th>
+                <th><?php echo html_escape($PALANG['pViewlog_action']) ?></th>
+                <th><?php echo html_escape($PALANG['pViewlog_data']) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php if (!empty($tLog) && is_array($tLog)): ?>
+            <?php foreach($tLog as $each): ?>
+            <tr>
+                <td><?php echo html_escape($each['timestamp']) ?></td>
+                <td><?php echo html_escape($each['username']) ?></td>
+                <td><?php echo html_escape($each['domain']) ?></td>
+                <td><?php echo html_escape($PALANG['pViewlog_action_' . $each['action']]) ?></td>
+                <td><?php echo html_escape($each['data']) ?></td>
+            </tr>
+            <?php endforeach; ?>
+            <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
 </div>
-
-<?php
-
-    if (sizeof ($tLog) > 0)
-    {
-       print "<table id=\"log_table\">\n";
-       print "   <tr>\n";
-       print "      <td colspan=\"5\"><h3>".$PALANG['pViewlog_welcome']." ".$fDomain."</h3></td>\n";
-       print "   </tr>\n";
-       print "   <tr class=\"header\">\n";
-       print "      <td>" . $PALANG['pViewlog_timestamp'] . "</td>\n";
-       print "      <td>" . $PALANG['pViewlog_username'] . "</td>\n";
-       print "      <td>" . $PALANG['pViewlog_domain'] . "</td>\n";
-       print "      <td>" . $PALANG['pViewlog_action'] . "</td>\n";
-       print "      <td>" . $PALANG['pViewlog_data'] . "</td>\n";
-       print "   </tr>\n";
-
-       for ($i = 0; $i < sizeof ($tLog); $i++)
-       {
-          if ((is_array ($tLog) and sizeof ($tLog) > 0))
-          {
-             $log_data = $tLog[$i]['data'];
-             $data_length = strlen ($log_data);
-             if ($data_length > 35) $log_data = substr ($log_data, 0, 35) . " ...";
-
-             print "   <tr class=\"hilightoff\" onMouseOver=\"className='hilighton';\" onMouseOut=\"className='hilightoff';\" onclick=\"alert('" . $PALANG['pViewlog_data'] . " = " . $tLog[$i]['data'] . "')\">\n";
-             print "      <td nowrap>" . $tLog[$i]['timestamp'] . "</td>\n";
-             print "      <td nowrap>" . $tLog[$i]['username'] . "</td>\n";
-             print "      <td nowrap>" . $tLog[$i]['domain'] . "</td>\n";
-             print "      <td nowrap>" . $PALANG['pViewlog_action_'.$tLog[$i]['action'] ] . "</td>\n";
-             print "      <td nowrap>" . $log_data . "</td>\n";
-             print "   </tr>\n";
-          }
-       }
-
-       print "</table>\n";
-    }
-?>

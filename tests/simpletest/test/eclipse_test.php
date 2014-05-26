@@ -29,4 +29,3 @@
 			$this->assertEqual($expected,$listener->output);
         }
     }
-?>

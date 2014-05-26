@@ -1,113 +1,49 @@
 <?php if( !defined('POSTFIXADMIN') ) die( "This file cannot be used standalone." ); ?>
-<?php
-function _menulink ($href, $title, $submenu = "") {
-    if ($submenu != "") $submenu = "<ul><li><a target='_top' href='$href'>$title</a>$submenu</li></ul>";
-    return "<li><a target='_top' href='$href'>$title</a>$submenu</li>";
-} 
-
-authentication_has_role('global-admin');
-
-echo "<div id='menu'>\n";
-echo "<ul>\n";
-
-$url = "create-mailbox.php"; if (isset ($_GET['domain'])) $url .= "?domain=" . urlencode($_GET['domain']);
-$submenu_virtual = _menulink($url, $PALANG['pMenu_create_mailbox']);
-
-$url = "create-alias.php"; if (isset ($_GET['domain'])) $url .= "?domain=" . urlencode($_GET['domain']);
-$submenu_virtual .=  _menulink($url, $PALANG['pMenu_create_alias']);
-
-if (boolconf('alias_domain')) {
-    $url = "create-alias-domain.php"; if (isset ($_GET['domain'])) $url .= "?target_domain=" . urlencode($_GET['domain']);
-    $submenu_virtual .=  _menulink($url, $PALANG['pMenu_create_alias_domain']);
-}
-
-$submenu_admin = _menulink("create-admin.php", $PALANG['pAdminMenu_create_admin']);
-
-$submenu_fetchmail = _menulink("fetchmail.php?new=1", $PALANG['pFetchmail_new_entry']);
-
-
-if (authentication_has_role('global-admin')) {
-    $submenu_domain = _menulink("create-domain.php", $PALANG['pAdminMenu_create_domain']);
-    $submenu_sendmail = _menulink("broadcast-message.php", $PALANG['pAdminMenu_broadcast_message']);
-} else {
-    $submenu_domain = "";
-    $submenu_sendmail = "";
-}
-
-if (authentication_has_role('global-admin')) {
-    print _menulink("list-admin.php", $PALANG['pAdminMenu_list_admin'], $submenu_admin);
-} else {
-    print _menulink("main.php", $PALANG['pMenu_main']);
-}
-
-print _menulink("list-domain.php", $PALANG['pAdminMenu_list_domain'], $submenu_domain);
-
-$link = 'list-virtual.php';
-if(isset($_SESSION['list_virtual_sticky_domain'])) {
-    $link = "list-virtual.php?domain=" . htmlentities($_SESSION['list_virtual_sticky_domain'], ENT_QUOTES);
-}
-print _menulink($link, $PALANG['pAdminMenu_list_virtual'], $submenu_virtual);
-
-if ($CONF['fetchmail'] == 'YES') {
-    print _menulink("fetchmail.php", $PALANG['pMenu_fetchmail'], $submenu_fetchmail);
-}
-
-if ($CONF['sendmail'] == 'YES') {
-    print _menulink("sendmail.php", $PALANG['pMenu_sendmail'], $submenu_sendmail);
-} 
-
-# not really useful in the admin menu
-#if ($CONF['vacation'] == 'YES') {
-#   print _menulink("edit-vacation.php", $PALANG['pUsersMenu_vacation']);
-#}
-
-print _menulink("password.php", $PALANG['pMenu_password']);
-
-if (authentication_has_role('global-admin') && 'pgsql'!=$CONF['database_type'] && $CONF['backup'] == 'YES') {
-    print _menulink("backup.php", $PALANG['pAdminMenu_backup']);
-}
-
-print _menulink("viewlog.php", $PALANG['pMenu_viewlog']);
-
-print _menulink("logout.php", $PALANG['pMenu_logout']);
-
-echo "</ul>\n";
-echo "</div>\n";
-
-print "<br clear='all' /><br>"; # TODO
-
-if (authentication_has_role('global-admin')) {
-    $motd_file = "motd-admin.txt";
-} else {
-    $motd_file = "motd.txt";
-}
-
-if (file_exists (realpath ($motd_file)))
-{
-    print "<div id=\"motd\">\n";
-    include ($motd_file);
-    print "</div>";
-}
-
-
-
-# IE can't handle :hover dropdowns correctly. It needs some JS instead.
-?>
-<script type='text/javascript'>
-sfHover = function() {
-    var sfEls = document.getElementById("menu").getElementsByTagName("LI");
-    for (var i=0; i<sfEls.length; i++) {
-        sfEls[i].onmouseover=function() {
-            this.className+=" sfhover";
-        }
-        sfEls[i].onmouseout=function() {
-            this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
-        }
-    }
-}
-if (window.attachEvent) window.attachEvent("onload", sfHover);
-</script>
-
-<?php
-/* vim: set ft=php expandtab softtabstop=3 tabstop=3 shiftwidth=3: */
-?>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="main.php">PostfixAdminZero</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <?php if (authentication_has_role('global-admin')): ?>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $PALANG['pAdminMenu_list_admin'] ?> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="list-admin.php"><?php echo $PALANG['pAdminMenu_list_admin'] ?></a></li>
+                        <li><a href="create-admin.php"><?php echo $PALANG['pAdminMenu_create_admin'] ?></a></li>
+                    </ul>
+                </li>
+                <?php endif; ?>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $PALANG['pAdminMenu_list_domain'] ?> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="list-domain.php"><?php echo $PALANG['pAdminMenu_list_domain'] ?></a></li>
+                        <?php if (authentication_has_role('global-admin')): ?>
+                        <li><a href="create-domain.php"><?php echo $PALANG['pAdminMenu_create_domain'] ?></a></li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $PALANG['pAdminMenu_list_virtual'] ?> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="list-virtual.php<?php if (!empty($_SESSION['list_virtual_sticky_domain'])) echo '?domain=' . urlencode($_SESSION['list_virtual_sticky_domain']) ?>"><?php echo $PALANG['pAdminMenu_list_virtual'] ?></a></li>
+                        <li><a href="create-mailbox.php<?php if (!empty($_GET['domain'])) echo '?domain=' . urlencode($_GET['domain']) ?>"><?php echo $PALANG['pMenu_create_mailbox'] ?></a></li>
+                        <li><a href="create-alias.php<?php if (!empty($_GET['domain'])) echo '?domain=' . urlencode($_GET['domain']) ?>"><?php echo $PALANG['pMenu_create_alias'] ?></a></li>
+                        <?php if (boolconf('alias_domain')): ?>
+                        <li><a href="create-alias-domain.php<?php if (!empty($_GET['domain'])) echo '?target_domain=' . urlencode($_GET['domain']) ?>"><?php echo $PALANG['pMenu_create_alias_domain'] ?></a></li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <li><a href="password.php"><?php echo $PALANG['pMenu_password'] ?></a></li>
+                <li><a href="viewlog.php"><?php echo $PALANG['pMenu_viewlog'] ?></a></li>
+          </ul>
+        </div>
+    </div>
+</div>

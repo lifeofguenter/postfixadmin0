@@ -1,39 +1,16 @@
 <?php if( !defined('POSTFIXADMIN') ) die( "This file cannot be used standalone." ); ?>
-<div id="login">
-<form name="login" method="post">
-<table id="login_table" cellspacing="10">
-   <tr>
-      <td colspan="2"><h4><?php print $PALANG['pLogin_welcome']; ?></h4></td>
-   </tr>
-   <tr>
-      <td><?php print $PALANG['pLogin_username'] . ":"; ?></td>
-      <td><input class="flat" type="text" name="fUsername" value="" /></td>
-   </tr>
-   <tr>
-      <td><?php print $PALANG['pLogin_password'] . ":"; ?></td>
-      <td><input class="flat" type="password" name="fPassword" /></td>
-   </tr>
-   <tr>
-      <td colspan="2">
-         <?php echo language_selector(); ?>
-      </td>
-   </tr>
-   <tr>
-      <td colspan="2" class="hlp_center"><input class="button" type="submit" name="submit" value="<?php print $PALANG['pLogin_button']; ?>" /></td>
-   </tr>
-   <tr>
-      <td colspan="2" class="standout"><?php print $tMessage; ?></td>
-   </tr>
-   <tr>
-      <td colspan="2"><a href="users/"><?php print $PALANG['pLogin_login_users']; ?></a></td>
-   </tr>
-</table>
-</form>
-
-<script type="text/javascript"><!--
-	document.login.fUsername.focus();
-// -->
-</script>
-
+<div class="container">
+    <form class="form-signin" role="form" name="login" method="post">
+        <h2 class="form-signin-heading"><?php echo $PALANG['pLogin_welcome'] ?></h2>
+        <?php if (!empty($tMessage)): ?>
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Oh snap!</strong> <?php echo html_escape($tMessage) ?>
+        </div>
+        <?php endif; ?>
+        <input type="email" class="form-control" name="fUsername" placeholder="<?php echo $PALANG['pLogin_username'] ?>" required autofocus>
+        <input type="password" class="form-control" name="fPassword" placeholder="<?php echo $PALANG['pLogin_password'] ?>" required>
+        <?php echo language_selector('form-control'); ?>
+        <button class="btn btn-lg btn-primary btn-block" type="submit"><?php echo $PALANG['pLogin_button'] ?></button>
+    </form>
 </div>
-<?php /* vim: set ft=php expandtab softtabstop=3 tabstop=3 shiftwidth=3: */ ?>

@@ -115,4 +115,3 @@ class TestOfCallingTearDownWithExceptions extends UnitTestCase {
 		throw new Test2Exception(__FUNCTION__);
 	}
 }
-?>

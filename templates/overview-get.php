@@ -57,4 +57,3 @@ for ($i = 0; $i < sizeof ($list_domains); $i++)
       }
    }
    print "</table>\n";
-?>

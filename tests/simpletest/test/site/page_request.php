@@ -60,4 +60,3 @@ class PageRequest {
         return $request->getAll();
     }
 }
-?>

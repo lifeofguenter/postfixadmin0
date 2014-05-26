@@ -184,4 +184,3 @@
             $this->sendValidEnd($parser);
         }
     }
-?>

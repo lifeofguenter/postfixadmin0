@@ -882,4 +882,3 @@
             $this->assertEqual($page->getField(new SimpleByLabel('B')), 'b');
         }
     }
-?>

@@ -1538,4 +1538,3 @@
             return $trace->traceMethod();
         }
     }
-?>

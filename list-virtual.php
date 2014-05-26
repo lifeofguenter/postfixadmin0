@@ -1,34 +1,6 @@
 <?php
-/** 
- * Postfix Admin 
- * 
- * LICENSE 
- * This source file is subject to the GPL license that is bundled with  
- * this package in the file LICENSE.TXT. 
- * 
- * Further details on the project are available at : 
- *     http://www.postfixadmin.com or http://postfixadmin.sf.net 
- * 
- * @version $Id: list-virtual.php 1199 2011-10-07 22:58:38Z christian_boltz $ 
- * @license GNU GPL v2 or later. 
- * 
- * File: list-virtual.php
- * List virtual users for a domain.
- *
- * Template File: list-virtual.php
- *
- * Template Variables:
- *
- * tMessage
- * tAlias
- * tMailbox
- *
- * Form POST \ GET Variables:
- *
- * fDomain
- * fDisplay
- */
-require_once('common.php');
+
+require_once 'common.php';
 
 
 authentication_require_role('admin');
@@ -81,13 +53,13 @@ if(!in_array($fDomain, $list_domains)) {
     exit;
 }
 
-if (!check_owner(authentication_get_username(), $fDomain)) { 
+if (!check_owner(authentication_get_username(), $fDomain)) {
     flash_error( $PALANG['invalid_parameter'] . " If you see this message, please open a bugreport"); # this check is most probably obsoleted by the in_array() check above
     header("Location: list-domain.php"); # domain not owned by this admin
     exit(0);
 }
 
-// store fDomain in $_SESSION so after adding/editing aliases/mailboxes we can 
+// store fDomain in $_SESSION so after adding/editing aliases/mailboxes we can
 // take the user back to the appropriate domain listing. (see templates/menu.php)
 if($fDomain) {
     $_SESSION['list_virtual_sticky_domain'] = $fDomain;
@@ -120,7 +92,7 @@ if (boolconf('alias_domain')) {
             }
             $tAliasDomains[] = $row;
         }
-    } 
+    }
     # now let's see if the current domain itself is an alias for another domain
     $query = "SELECT $table_alias_domain.alias_domain,$table_alias_domain.target_domain,$table_alias_domain.modified,$table_alias_domain.active FROM $table_alias_domain WHERE alias_domain='$fDomain'";
     if ('pgsql'==$CONF['database_type'])
@@ -180,7 +152,7 @@ if ($result['rows'] > 0)
     {
         if ('pgsql'==$CONF['database_type'])
         {
-            //. at least in my database, $row['modified'] already looks like : 2009-04-11 21:38:10.75586+01, 
+            //. at least in my database, $row['modified'] already looks like : 2009-04-11 21:38:10.75586+01,
             // while gmstrftime expects an integer value. strtotime seems happy though.
             //$row['modified']=gmstrftime('%c %Z',$row['modified']);
             $row['modified'] = date('Y-m-d H:i', strtotime($row['modified']));
@@ -212,7 +184,7 @@ if ($search == "") {
     $sql_where  .= " AND ( $table_mailbox.username LIKE '%$search%' OR $table_mailbox.name LIKE '%$search%' ";
     if ($display_mailbox_aliases) {
         $sql_where  .= " OR $table_alias.goto LIKE '%$search%' ";
-    } 
+    }
     $sql_where  .= " ) "; # $search is already escaped
 }
 
@@ -252,7 +224,7 @@ if ($result['rows'] > 0)
             $goto_split = explode(",", $row['goto']);
             $row['goto_mailbox'] = 0;
             $row['goto_other'] = array();
-            
+
             foreach ($goto_split as $goto_single) {
                 if (!empty($CONF['recipient_delimiter'])) {
                     $goto_single_rec_del = preg_replace('/' .$delimiter. '[^' .$delimiter. '@]*@/', "@", $goto_single);
@@ -273,10 +245,10 @@ if ($result['rows'] > 0)
             $row['modified'] = date('Y-m-d H:i', strtotime($row['modified']));
             $row['created'] = date('Y-m-d H:i', strtotime($row['created']));
             $row['active']=('t'==$row['active']) ? 1 : 0;
-            if($row['v_active'] == NULL) { 
+            if($row['v_active'] == NULL) {
                 $row['v_active'] = 'f';
             }
-            $row['v_active']=('t'==$row['v_active']) ? 1 : 0; 
+            $row['v_active']=('t'==$row['v_active']) ? 1 : 0;
         }
         $tMailbox[] = $row;
     }
@@ -295,8 +267,8 @@ if (isset ($limit)) {
     if (($limit['alias_count'] > $page_size) or ($limit['mailbox_count'] > $page_size)) {
         $tDisplay_up_show = 1;
     }
-    if ((($fDisplay + $page_size) < $limit['alias_count']) or 
-        (($fDisplay + $page_size) < $limit['mailbox_count'])) 
+    if ((($fDisplay + $page_size) < $limit['alias_count']) or
+        (($fDisplay + $page_size) < $limit['mailbox_count']))
     {
         $tDisplay_next_show = 1;
         $tDisplay_next = $fDisplay + $page_size;
@@ -318,10 +290,8 @@ if (isset ($limit)) {
 
 // this is why we need a proper template layer.
 $fDomain = htmlentities($fDomain, ENT_QUOTES);
-include ("templates/header.php");
-include ("templates/menu.php");
-include ("templates/list-virtual.php");
-include ("templates/footer.php");
-
-/* vim: set expandtab softtabstop=4 tabstop=4 shiftwidth=4: */
-?>
+$template_title = 'Virtual List - Postfix Admin (Zero)';
+include 'templates/header.php';
+include 'templates/menu.php';
+include 'templates/list-virtual.php';
+include 'templates/footer.php';

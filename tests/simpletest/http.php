@@ -621,4 +621,3 @@
             return ! $packet;
         }
     }
-?>

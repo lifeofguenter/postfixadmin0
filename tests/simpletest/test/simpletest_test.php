@@ -54,4 +54,3 @@
             $this->assertClone($resource, $context->get('DummyResource'));
         }
     }
-?>

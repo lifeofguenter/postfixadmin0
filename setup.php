@@ -473,4 +473,3 @@ function check_setup_password($password, $lostpw_mode = 0) {
 }
 
 /* vim: set expandtab softtabstop=4 tabstop=4 shiftwidth=4: */
-?>

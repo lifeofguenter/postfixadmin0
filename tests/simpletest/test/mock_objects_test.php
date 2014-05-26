@@ -663,4 +663,3 @@
             $this->assertTrue(method_exists($mock, 'ConstructorSuperClass'));
         }
     }
-?>

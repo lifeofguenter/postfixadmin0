@@ -1,33 +1,6 @@
 <?php
-/** 
- * Postfix Admin 
- * 
- * LICENSE 
- * This source file is subject to the GPL license that is bundled with  
- * this package in the file LICENSE.TXT. 
- * 
- * Further details on the project are available at : 
- *     http://www.postfixadmin.com or http://postfixadmin.sf.net 
- * 
- * @version $Id: password.php 566 2009-02-15 15:02:26Z christian_boltz $ 
- * @license GNU GPL v2 or later. 
- * 
- * File: password.php
- * Allows admins to change their own password.
- * Template File: password.php
- *
- * Template Variables:
- *
- * tMessage
- *
- * Form POST \ GET Variables:
- *
- * fPassword_current
- * fPassword
- * fPassword2
- */
 
-require_once('common.php');
+require_once 'common.php';
 
 authentication_require_role('admin');
 
@@ -35,10 +8,11 @@ $SESSID_USERNAME = authentication_get_username();
 
 if ($_SERVER['REQUEST_METHOD'] == "GET")
 {
-    include ("./templates/header.php");
-    include ("./templates/menu.php");
-    include ("./templates/password.php");
-    include ("./templates/footer.php");
+    $template_title = 'Change Password - Postfix Admin (Zero)';
+    include './templates/header.php';
+    include './templates/menu.php';
+    include './templates/password.php';
+    include './templates/footer.php';
 }
 
 if ($_SERVER['REQUEST_METHOD'] == "POST")
@@ -80,19 +54,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
         $result = db_query ("UPDATE $table_admin SET password='$password',modified=NOW() WHERE username='$username'");
         if ($result['rows'] == 1)
         {
-            $tMessage = $PALANG['pPassword_result_success'];
+            $tMessage = array(
+                'level' => 'success',
+                'msg' => $PALANG['pPassword_result_success']
+            );
         }
         else
         {
-            $tMessage = $PALANG['pPassword_result_error'];
+            $tMessage = array(
+                'level' => 'error',
+                'msg' => $PALANG['pPassword_result_error']
+            );
         }
     }
 
-    include ("./templates/header.php");
-    include ("./templates/menu.php");
-    include ("./templates/password.php");
-    include ("./templates/footer.php");
+    $template_title = 'Change Password - Postfix Admin (Zero)';
+    include './templates/header.php';
+    include './templates/menu.php';
+    include './templates/password.php';
+    include './templates/footer.php';
 }
-
-/* vim: set expandtab softtabstop=4 tabstop=4 shiftwidth=4: */
-?>

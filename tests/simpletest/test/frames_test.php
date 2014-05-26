@@ -572,4 +572,3 @@
             $this->assertIdentical($frameset->getField(new SimpleByName('a')), 'f');
         }
     }
-?>

@@ -64,4 +64,3 @@
             $this->addTestFile(dirname(__FILE__) . '/acceptance_test.php');
         }
     }
-?>

@@ -123,4 +123,3 @@ class SimpleReflection {
 		return "function &$method()";
 	}
 }
-?>

@@ -1,31 +1,6 @@
 <?php
-/** 
- * Postfix Admin 
- * 
- * LICENSE 
- * This source file is subject to the GPL license that is bundled with  
- * this package in the file LICENSE.TXT. 
- * 
- * Further details on the project are available at : 
- *     http://www.postfixadmin.com or http://postfixadmin.sf.net 
- * 
- * @version $Id: list-domain.php 1029 2011-04-10 14:46:43Z christian_boltz $ 
- * @license GNU GPL v2 or later. 
- * 
- * File: list-domain.php
- * List all domains as a quick overview.
- * Template File: admin_list-domain.php
- *
- * Template Variables:
- *
- * -none-
- *
- * Form POST \ GET Variables:
- *
- * fUsername
- */
 
-require_once('common.php');
+require_once 'common.php';
 
 authentication_require_role('admin');
 
@@ -90,7 +65,7 @@ while ($row = db_array ($result['result'])) {
 # fetch number of aliases
 # doing this separate is much faster than doing it in one "big" query
 $query = "
-   SELECT $table_domain.domain, COUNT( DISTINCT $table_alias.address ) AS alias_count 
+   SELECT $table_domain.domain, COUNT( DISTINCT $table_alias.address ) AS alias_count
    FROM $table_domain
    LEFT JOIN $table_alias ON $table_domain.domain = $table_alias.domain
    $where
@@ -105,15 +80,16 @@ while ($row = db_array ($result['result'])) {
    $domain_properties [$row['domain']] ['alias_count'] = $row['alias_count'] - $domain_properties [$row['domain']] ['mailbox_count'];
 }
 
-include ("templates/header.php");
-include ("templates/menu.php");
+$template_title = 'Domain List - Postfix Admin (Zero)';
+include 'templates/header.php';
+include 'templates/menu.php';
 
-if ($is_superadmin) {
-   include ("templates/admin_list-domain.php");
-} else {
-   include ("templates/overview-get.php");
+if ($is_superadmin)
+{
+    include 'templates/admin_list-domain.php';
 }
-include ("templates/footer.php");
-
-/* vim: set expandtab softtabstop=3 tabstop=3 shiftwidth=3: */
-?>
+else
+{
+    include 'templates/overview-get.php';
+}
+include 'templates/footer.php';

@@ -133,4 +133,3 @@ if (is_a($e, 'PEAR_Error')) {
     echo $e->getMessage();
     die();
 }
-?>
