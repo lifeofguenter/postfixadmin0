@@ -4,10 +4,10 @@
     <h2><?php echo html_escape($PALANG['pAdminCreate_domain_welcome']) ?></h2>
 
     <?php if (!empty($tMessage) && is_array($tMessage)): ?>
-        <div class="alert alert-<?php echo $tMessage['level'] ?> alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <?php echo html_escape($tMessage['msg']) ?>
-        </div>
+    <div class="alert alert-<?php echo $tMessage['level'] ?> alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <?php echo html_escape($tMessage['msg']) ?>
+    </div>
     <?php endif; ?>
 
     <div class="row">

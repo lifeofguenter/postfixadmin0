@@ -28,3 +28,9 @@ body > .container {
 .margin-top-20 {
 	margin-top: 20px;
 }
+
+.no-appearance {
+    -webkit-appearance: none;
+    -moz-appearance:    none;
+    appearance:         none; 
+}

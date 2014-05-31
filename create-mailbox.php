@@ -1,41 +1,6 @@
 <?php
-/** 
- * Postfix Admin 
- * 
- * LICENSE 
- * This source file is subject to the GPL license that is bundled with  
- * this package in the file LICENSE.TXT. 
- * 
- * Further details on the project are available at : 
- *     http://www.postfixadmin.com or http://postfixadmin.sf.net 
- * 
- * File: create-mailbox.php
- * Responsible for allowing for the creation of mail boxes
- *
- * @version $Id: create-mailbox.php 1622 2014-01-12 17:39:58Z christian_boltz $
- * @license GNU GPL v2 or later.
- *
- * Template Variables:
- *
- * tMessage
- * tUsername
- * tName
- * tQuota
- * tDomain
- *
- * Form POST \ GET Variables:
- *
- * fUsername
- * fPassword
- * fPassword2
- * fName
- * fQuota
- * fDomain
- * fActive
- * fMail
- */
 
-require_once('common.php');
+require_once 'common.php';
 
 authentication_require_role('admin');
 $SESSID_USERNAME = authentication_get_username();
@@ -206,6 +171,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
         {
             $tDomain = $fDomain;
             $tMessage = $PALANG['pAlias_result_error'] . "<br />($fUsername -> $fUsername)</br />";
+            $tMessage = array(
+                'level' => 'danger',
+                'msg' => $PALANG['pAlias_result_error'] . ': ' . $fUsername . ' -> ' . $fUsername,
+            );
         }
 
 
@@ -220,7 +189,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
         if ($result['rows'] != 1 || !mailbox_postcreation($fUsername,$fDomain,$maildir, $quota))
         {
             $tDomain = $fDomain;
-            $tMessage .= $PALANG['pCreate_mailbox_result_error'] . "<br />($fUsername)<br />";
+            $tMessage = array(
+                'level' => 'danger',
+                'msg' => $PALANG['pCreate_mailbox_result_error'] . ': ' . $fUsername,
+            );
             db_query('ROLLBACK');
         }
         else
@@ -247,11 +219,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
 
                 if (!smtp_mail ($fTo, $fFrom, $fHeaders))
                 {
-                    $tMessage .= "<br />" . $PALANG['pSendmail_result_error'] . "<br />";
+                    $tMessage = array(
+                        'level' => 'danger',
+                        'msg' => $PALANG['pSendmail_result_error'],
+                    );
                 }
                 else
                 {
-                    $tMessage .= "<br />" . $PALANG['pSendmail_result_success'] . "<br />";
+                    $tMessage = array(
+                        'level' => 'success',
+                        'msg' => $PALANG['pSendmail_result_success'],
+                    );
                 }
             }
 
@@ -260,18 +238,23 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
 
             if (create_mailbox_subfolders($fUsername,$fPassword))
             {
-                $tMessage .= $PALANG['pCreate_mailbox_result_success'] . "<br />($fUsername$tShowpass)";
+                $tMessage = array(
+                    'level' => 'success',
+                    'msg' => $PALANG['pCreate_mailbox_result_success'] . ': ' . $fUsername . $tShowpass,
+                );
             } else {
-                $tMessage .= $PALANG['pCreate_mailbox_result_succes_nosubfolders'] . "<br />($fUsername$tShowpass)";
+                $tMessage = array(
+                	'level' => 'success',
+                    'msg' => $PALANG['pCreate_mailbox_result_succes_nosubfolders'] . ': ' . $fUsername . $tShowpass,
+                );
             }
 
         }
     }
 }
 
-include ("templates/header.php");
-include ("templates/menu.php");
-include ("templates/create-mailbox.php");
-include ("templates/footer.php");
-
-/* vim: set expandtab softtabstop=3 tabstop=3 shiftwidth=3: */
+$template_title = 'Create Mailbox - Postfix Admin (Zero)';
+include 'templates/header.php';
+include 'templates/menu.php';
+include 'templates/create-mailbox.php';
+include 'templates/footer.php';

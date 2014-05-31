@@ -134,9 +134,9 @@ $PALANG['pEdit_alias_result_error'] = '<span class="error_msg">Unable to modify 
 
 $PALANG['pCreate_mailbox_welcome'] = 'Create a new mailbox for your domain.';
 $PALANG['pCreate_mailbox_username'] = 'Username';
-$PALANG['pCreate_mailbox_username_text_error1'] = '<br /><span class="error_msg">The EMAIL is not valid!</span>';
-$PALANG['pCreate_mailbox_username_text_error2'] = '<br /><span class="error_msg">This email address already exists, please choose a different one!</span>';
-$PALANG['pCreate_mailbox_username_text_error3'] = '<br /><span class="error_msg">You have reached your limit to create mailboxes!</span>';
+$PALANG['pCreate_mailbox_username_text_error1'] = 'The EMAIL is not valid!';
+$PALANG['pCreate_mailbox_username_text_error2'] = 'This email address already exists, please choose a different one!';
+$PALANG['pCreate_mailbox_username_text_error3'] = 'You have reached your limit to create mailboxes!';
 $PALANG['pCreate_mailbox_password'] = 'Password';
 $PALANG['pCreate_mailbox_password2'] = 'Password (again)';
 $PALANG['pCreate_mailbox_password_text'] = 'Password for POP3/IMAP';

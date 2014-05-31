@@ -167,6 +167,34 @@
                         </td>
                         <?php endif; ?>
                         <td><?php echo html_escape($each['name']) ?></td>
+                        <?php if (!empty($CONF['quota'])): ?>
+                        <td>
+                            <?php if ($each['quota'] == 0): ?>
+                            <?php echo html_escape($PALANG['pOverview_unlimited']) ?>
+                            <?php elseif ($each['quota'] < 0): ?>
+                            <?php echo html_escape($PALANG['pOverview_disabled']) ?>
+                            <?php else: ?>
+                            <?php if (boolconf('used_quotas')): ?>
+                            <?php echo divide_quota($each['current']) ?> /;
+                            <?php endif; ?>
+                            <?php echo divide_quota($each['quota']) ?>
+                            <?php endif; ?>
+                        </td>
+                        <?php endif; ?>
+                        <td><?php echo html_escape($each['modified']) ?></td>
+                        <td><a href="edit-active.php?username=<?php echo urlencode($each['username']) ?>&domain=<?php echo urlencode($fDomain) ?>"><?php echo html_escape((($each['active'] == 1) ? $PALANG['YES'] : $PALANG['NO'])) ?></a></td>
+                        <td>
+                            <div class="btn-group pull-right">
+                                <a class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" href="#">Action <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <?php if ((!authentication_has_role('global-admin') && !empty($CONF['alias_control_admin'])) || (authentication_has_role('global-admin') && !empty($CONF['alias_control']))): ?>
+                                    <li><a href="edit-alias.php?address=<?php echo urlencode($each['username']) ?>"><?php echo html_escape($PALANG['pOverview_alias_edit']) ?></a></li>
+                                    <?php endif; ?>
+                                    <li><a href="edit-mailbox.php?username=<?php echo urlencode($each['username']) ?>&domain=<?php echo urlencode($fDomain) ?>"><?php echo html_escape($PALANG['edit']) ?></a></li>
+                                    <li><a href="delete.php?table=mailbox&delete=<?php echo urlencode($each['username']) ?>&domain=<?php echo urlencode($fDomain) ?>" onclick="return confirm('Are you sure?')"><?php echo html_escape($PALANG['del']) ?></a></li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                     <?php endif; ?>
@@ -175,60 +203,12 @@
             </div>
         <?php
 
-        if (sizeof ($tMailbox) > 0) {
-
-
-   $colspan=8;
-           if ($CONF['vacation_control_admin'] == 'YES') $colspan=$colspan+1;
-           if ($CONF['alias_control_admin'] == 'YES') $colspan=$colspan+1;
-           if ($display_mailbox_aliases)              $colspan=$colspan+1;
-
-           print "<table id=\"mailbox_table\">\n";
-
-   print "   <tr class=\"header\">\n";
-   if ($CONF['show_status'] == 'YES') { print "<td></td>\n"; }
-               print "      <td>" . $PALANG['pOverview_mailbox_username'] . "</td>\n";
-                   if ($display_mailbox_aliases) print "      <td>" . $PALANG['pOverview_alias_goto'] . "</td>\n";
-                   print "      <td>" . $PALANG['pOverview_mailbox_name'] . "</td>\n";
-                   if ($CONF['quota'] == 'YES') print "      <td>" . $PALANG['pOverview_mailbox_quota'] . "</td>\n";
-                       print "      <td>" . $PALANG['pOverview_mailbox_modified'] . "</td>\n";
-   print "      <td>" . $PALANG['pOverview_mailbox_active'] . "</td>\n";
-           $colspan = $colspan - 6;
-           print "      <td colspan=\"$colspan\">&nbsp;</td>\n";
-           print "   </tr>\n";
-
-           for ($i = 0; $i < sizeof ($tMailbox); $i++)
-           {
-           if ((is_array ($tMailbox) and sizeof ($tMailbox) > 0))
-      {
+      /*
          print "   <tr class=\"hilightoff\" onMouseOver=\"className='hilighton';\" onMouseOut=\"className='hilightoff';\">\n";
 
 
 
 
-
-                       if ($CONF['quota'] == 'YES')
-                       {
-                       print "      <td>";
-            if ($tMailbox[$i]['quota'] == 0)
-           {
-           print $PALANG['pOverview_unlimited'];
-                           }
-                       elseif ($tMailbox[$i]['quota'] < 0)
-                       {
-                       print $PALANG['pOverview_disabled'];
-                       }
-                       else
-                       {
-                       if (boolconf('used_quotas'))
-                       print divide_quota ($tMailbox[$i]['current']).'/';
-                       print divide_quota ($tMailbox[$i]['quota']);
-                   }
-                       print "</td>\n";
-        }
-        print "      <td>" . $tMailbox[$i]['modified'] . "</td>\n";
-        $active = ($tMailbox[$i]['active'] == 1) ? $PALANG['YES'] : $PALANG['NO'];
-            print "      <td><a href=\"edit-active.php?username=" . urlencode ($tMailbox[$i]['username']) . "&domain=$fDomain" . "\">" . $active . "</a></td>\n";
 
             if ($CONF['vacation_control_admin'] == 'YES' && $CONF['vacation'] == 'YES')
         {
@@ -248,40 +228,9 @@
         }
         }
 
-            $edit_aliases=0;
-            if ( (! authentication_has_role('global-admin')) && $CONF['alias_control_admin'] == 'YES') $edit_aliases = 1;
-            if (    authentication_has_role('global-admin')  && $CONF['alias_control'] == 'YES') $edit_aliases = 1;
-
-            if ($edit_aliases == 1)
-            {
-            print "      <td><a href=\"edit-alias.php?address=" . urlencode ($tMailbox[$i]['username']) . "\">" . $PALANG['pOverview_alias_edit'] . "</a></td>\n";
-            }
-
-            print "      <td><a href=\"edit-mailbox.php?username=" . urlencode ($tMailbox[$i]['username']) . "&domain=$fDomain" . "\">" . $PALANG['edit'] . "</a></td>\n";
-            print "      <td><a href=\"delete.php?table=mailbox" . "&delete=" . urlencode ($tMailbox[$i]['username']) . "&domain=$fDomain" . "\"onclick=\"return confirm ('" . $PALANG['confirm'] . $PALANG['pOverview_get_mailboxes'] . ": ". $tMailbox[$i]['username'] . "')\">" . $PALANG['del'] . "</a></td>\n";
-            print "   </tr>\n";
-      }
-        }
-        print "</table>\n";
-        print "<div id=\"nav_bar\"><a name=\"LowArrow\" /a>\n";
-        if ($tDisplay_back_show == 1)
-            {
-            print "<a href=\"$file?domain=$fDomain&limit=$tDisplay_back#LowArrow\"><img border=\"0\" src=\"images/arrow-l.png\" title=\"" . $PALANG['pOverview_left_arrow'] . "\" alt=\"" . $PALANG['pOverview_left_arrow'] . "\" /></a>\n";
-            }
-            if ($tDisplay_up_show == 1)
-            {
-                print "<a href=\"$file?domain=$fDomain&limit=0#LowArrow\"><img border=\"0\" src=\"images/arrow-u.png\" title=\"" . $PALANG['pOverview_up_arrow'] . "\" alt=\"" . $PALANG['pOverview_up_arrow'] . "\" /></a>\n";
-            }
-            if ($tDisplay_next_show == 1)
-            {
-            print "<a href=\"$file?domain=$fDomain&limit=$tDisplay_next#LowArrow\"><img border=\"0\" src=\"images/arrow-r.png\" title=\"" . $PALANG['pOverview_right_arrow'] . "\" alt=\"" . $PALANG['pOverview_right_arrow'] . "\" /></a>\n";
-            }
-            print "</div>\n";
-
-            }
 
 
-        ?>
+        */ ?>
 
         </div>
     </div>
@@ -384,4 +333,5 @@ if ((sizeof ($tAliasDomains) > 0) || (is_array ($tTargetDomain) ))
 
 
 ?>
+
 </div>
