@@ -12,6 +12,8 @@
         </div>
     </div>
 
+    <hr>
+
     <?php if (!empty($tMessage) && is_array($tMessage)): ?>
     <div class="alert alert-<?php echo $tMessage['level'] ?> alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

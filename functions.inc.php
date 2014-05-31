@@ -1,27 +1,11 @@
 <?php
-/**
- * Postfix Admin
- *
- * LICENSE
- * This source file is subject to the GPL license that is bundled with
- * this package in the file LICENSE.TXT.
- *
- * Further details on the project are available at :
- *     http://www.postfixadmin.com or http://postfixadmin.sf.net
- *
- * @version $Id: functions.inc.php 1650 2014-02-19 12:27:02Z christian_boltz $
- * @license GNU GPL v2 or later.
- *
- * File: functions.inc.php
- * Contains re-usable code.
- */
 
 $version = '0.1';
 
 function html_escape($string)
 {
     $string = str_replace('<br>', "\n", $string);
-    $string = htmlentities($string, ENT_QUOTES|ENT_HTML5, 'UTF-8');
+    $string = htmlspecialchars($string, ENT_QUOTES|ENT_HTML5, 'UTF-8');
     $string = str_replace('\n', '<br>', $string);
     return $string;
 }
